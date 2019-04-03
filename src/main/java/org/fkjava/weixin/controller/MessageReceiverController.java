@@ -75,10 +75,10 @@ public class MessageReceiverController {
 		type = type.substring(0, type.indexOf("]]></MsgType>"));
 
 		// 根据消息类型，找到对应的Java类型
-		Class<? extends InMessage> cla = MessageTypeRegister.getClass(type);
+		Class<? extends Object> cla = MessageTypeRegister.getClass(type);
 
 		// 使用JAXB的API完成消息转换
-		InMessage inMessage = JAXB.unmarshal(xml, cla);
+		InMessage inMessage = (InMessage) JAXB.unmarshal(xml, cla);
 
 		// 后面就调用业务逻辑层负责处理消息
 		this.messageService.onMessage(inMessage);
