@@ -2,6 +2,7 @@ package org.fkjava.weixin.controller;
 
 import javax.xml.bind.JAXB;
 
+import org.apache.logging.log4j.LogManager;
 import org.fkjava.weixin.domain.InMessage;
 import org.fkjava.weixin.service.MessageService;
 import org.fkjava.weixin.service.MessageTypeRegister;
