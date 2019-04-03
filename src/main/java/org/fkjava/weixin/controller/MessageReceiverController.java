@@ -1,20 +1,19 @@
 package org.fkjava.weixin.controller;
 
-import javax.xml.bind.JAXB;
-
-import org.apache.logging.log4j.LogManager;
 import org.fkjava.weixin.domain.InMessage;
 import org.fkjava.weixin.service.MessageService;
 import org.fkjava.weixin.service.MessageTypeRegister;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 
 // Controller（控制器），其实就相当于是Servlet，但是Spring MVC把所有的Servlet相关API都屏蔽掉了！
@@ -27,7 +26,10 @@ public class MessageReceiverController {
 	// 能够自动根据接口和实现的关系，自动把合适类型的对象放进来。
 	@Autowired
 	private MessageService messageService;
-
+	@Autowired
+	@Qualifier("xmlMapper")
+	private XmlMapper xmlMapper;
+	
 	private static final Logger LOG = LoggerFactory.getLogger(MessageReceiverController.class);
 
 	// 必须要有Handler方法才不会出现404
