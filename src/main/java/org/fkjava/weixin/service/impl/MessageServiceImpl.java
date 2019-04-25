@@ -30,7 +30,7 @@ public class MessageServiceImpl implements MessageService {
 		// 如果多人共享一个服务器，还需要在通道前面增加一个特征。kemao_3_就是特征。
 		// msg.getMsgType()把不同类型的消息放入不同通道。
 		try {
-			inMessageTemplate.convertAndSend("kemao_3_" + msg.getMsgType(), msg);
+			inMessageTemplate.convertAndSend("fengzhe_" + msg.getMsgType(), msg);
 		} catch (Exception e) {
 			LOG.error("把转换的消息放入队列中出现问题：" + e.getLocalizedMessage(), e);
 		}
