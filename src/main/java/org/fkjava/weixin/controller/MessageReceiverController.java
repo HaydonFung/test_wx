@@ -19,7 +19,7 @@ import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 // Controller（控制器），其实就相当于是Servlet，但是Spring MVC把所有的Servlet相关API都屏蔽掉了！
 // 屏蔽的好处：不需要依赖Tomcat就可以实现单元测试。
 @RestController // 基于RESTful风格的WEB服务的控制器
-@RequestMapping("/fengzhe/test_wx/reciver") // 访问哪个路径的时候，被此控制器处理.
+@RequestMapping("/fengzhe/test_wx/reciver") // 访问哪个路径的时候，被此控制器处理
 public class MessageReceiverController {
 
 	// 自动从Spring的容器里面获取一个消息服务出来，用于处理转换后的消息。现在还未实现消息的处理。
@@ -29,7 +29,7 @@ public class MessageReceiverController {
 	@Autowired
 	@Qualifier("xmlMapper")
 	private XmlMapper xmlMapper;
-	
+
 	private static final Logger LOG = LoggerFactory.getLogger(MessageReceiverController.class);
 
 	// 必须要有Handler方法才不会出现404
@@ -74,26 +74,26 @@ public class MessageReceiverController {
 //		}//......
 
 		// 截取XML字符串里面的消息类型
-				String type = xml.substring(xml.indexOf("<MsgType><![CDATA[") + 18);
-				type = type.substring(0, type.indexOf("]]></MsgType>"));
+		String type = xml.substring(xml.indexOf("<MsgType><![CDATA[") + 18);
+		type = type.substring(0, type.indexOf("]]></MsgType>"));
 
-				// 根据消息类型，找到对应的Java类型
-				Class<? extends InMessage> cla = MessageTypeRegister.getClass(type);
+		// 根据消息类型，找到对应的Java类型
+		Class<? extends InMessage> cla = MessageTypeRegister.getClass(type);
 
-				// 使用JAXB的API完成消息转换
-//				InMessage msg = JAXB.unmarshal(new StringReader(xml), cla);
+		// 使用JAXB的API完成消息转换
+//		InMessage msg = JAXB.unmarshal(new StringReader(xml), cla);
 
-				// 使用XmlMapper实现XML转换成Java对象
-				try {
-					InMessage inMessage = xmlMapper.readValue(xml, cla);
+		// 使用XmlMapper实现XML转换成Java对象
+		try {
+			InMessage inMessage = xmlMapper.readValue(xml, cla);
 
-					// 后面就调用业务逻辑层负责处理消息
-					this.messageService.onMessage(inMessage);
-				} catch (Exception e) {
-					LOG.error("处理公众号信息出现错误：{}", e.getMessage());
-					LOG.debug("处理公众号信息时出现的错误详情：", e);
-				}
+			// 后面就调用业务逻辑层负责处理消息
+			this.messageService.onMessage(inMessage);
+		} catch (Exception e) {
+			LOG.error("处理公众号信息出现错误：{}", e.getMessage());
+			LOG.debug("处理公众号信息时出现的错误详情：", e);
+		}
 
-				return "success";
+		return "success";
 	}
 }

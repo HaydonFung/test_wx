@@ -6,6 +6,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.fkjava.weixin.domain.InMessage;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @XmlRootElement(name = "xml") // 指定XML的根元素名称
@@ -31,12 +32,11 @@ public class TextInMessage extends InMessage {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "TextInMessage [content=" + content + ", getToUserName()=" + getToUserName() + ", getFromUserName()="
 				+ getFromUserName() + ", getCreateTime()=" + getCreateTime() + ", getMsgType()=" + getMsgType()
 				+ ", getMsgId()=" + getMsgId() + "]";
 	}
-
 }
