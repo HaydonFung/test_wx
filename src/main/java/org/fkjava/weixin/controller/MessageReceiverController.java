@@ -1,5 +1,9 @@
 package org.fkjava.weixin.controller;
 
+import java.io.StringReader;
+
+import javax.xml.bind.JAXB;
+
 import org.fkjava.weixin.domain.InMessage;
 import org.fkjava.weixin.service.MessageService;
 import org.fkjava.weixin.service.MessageTypeRegister;
@@ -85,10 +89,11 @@ public class MessageReceiverController {
 
 		// 使用XmlMapper实现XML转换成Java对象
 		try {
-			InMessage inMessage = xmlMapper.readValue(xml, cla);
+//			InMessage inMessage = xmlMapper.readValue(xml, cla);
+			InMessage msg = JAXB.unmarshal(new StringReader(xml), cla);
 
 			// 后面就调用业务逻辑层负责处理消息
-			this.messageService.onMessage(inMessage);
+			this.messageService.onMessage(msg);
 		} catch (Exception e) {
 			LOG.error("处理公众号信息出现错误：{}", e.getMessage());
 			LOG.debug("处理公众号信息时出现的错误详情：", e);
